@@ -1,9 +1,9 @@
-export const Filter = ({ list, isAllDone, curFilter, handleFilterStatus }) => {
+export const Filter = ({ curFilter, handleFilterStatus }) => {
   const status = ["All", "Active", "Done"];
 
   return (
     <div className="flex justify-between items-center w-[700px] mt-5">
-      <div className="flex">
+      {/* <div className="flex">
         <button
           className={`px-5 py-2 rounded-full ${
             list.length
@@ -15,16 +15,16 @@ export const Filter = ({ list, isAllDone, curFilter, handleFilterStatus }) => {
         >
           {isAllDone ? "Inverse All" : "Choose All"}
         </button>
-        {isAllDone ? (
+        {isAllDone && list.length ? (
           <button
             className="cursor-pointer bg-red-500 text-white px-5 py-2 rounded-full ml-2"
-            onClick={() => handleFilterStatus("remove-all")}
+            onClick={() => handleFilterStatus("remove")}
           >
-            Remove All
+            Remove
           </button>
         ) : null}
-      </div>
-      
+      </div> */}
+
       <div className="flex">
         {status.map((item) => (
           <button

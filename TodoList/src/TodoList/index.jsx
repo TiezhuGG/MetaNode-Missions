@@ -2,29 +2,19 @@ import { useState } from "react";
 import { Input } from "./Input";
 import { List } from "./List";
 import { Filter } from "./Filter";
-
-const originList = [
-  {
-    id: 1,
-    text: "吃饭",
-    isDone: false,
-  },
-  {
-    id: 2,
-    text: "睡觉",
-    isDone: false,
-  },
-  {
-    id: 3,
-    text: "打豆豆",
-    isDone: false,
-  },
-];
+import { useEffect } from "react";
 
 export const TodoList = () => {
-  const [list, setList] = useState(originList);
+  const [list, setList] = useState(() => {
+    const data = localStorage.getItem("todo-list");
+    return data ? JSON.parse(data) : [];
+  });
+
   const [curFilter, setCurFilter] = useState("All");
-  const [isAllDone, setIsAllDone] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("todo-list", JSON.stringify(list));
+  }, [list]);
 
   const generateId = () => {
     return Date.now() + Math.random().toString().substring(2, 6);
@@ -65,24 +55,6 @@ export const TodoList = () => {
   };
 
   const handleFilterStatus = (status) => {
-    if (status === "choose-all") {
-      setList(
-        list.map((item) => {
-          return {
-            ...item,
-            isDone: isAllDone ? false : true,
-          };
-        })
-      );
-      setIsAllDone(list.every((item) => !item.isDone));
-      setCurFilter("All");
-      return;
-    } else if (status === "remove-all") {
-      setList([]);
-      setIsAllDone(false);
-      setCurFilter("All");
-      return;
-    }
     setCurFilter(status);
   };
 
@@ -94,7 +66,6 @@ export const TodoList = () => {
         <Input handleAddItem={handleAddItem} />
         <Filter
           list={list}
-          isAllDone={isAllDone}
           curFilter={curFilter}
           handleFilterStatus={handleFilterStatus}
         />

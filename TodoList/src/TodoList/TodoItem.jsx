@@ -37,7 +37,7 @@ export const TodoItem = ({
         {isEdit ? (
           <div>
             <input
-              className="ml-4 focus:outline-none shadow-md"
+              className="ml-4 pl-2 shadow-md outline-cyan-500"
               type="text"
               autoFocus
               value={editText}
@@ -46,13 +46,13 @@ export const TodoItem = ({
               }}
             />
             <button
-              className="cursor-pointer bg-cyan-500 text-white px-3 py-1 rounded-full ml-2"
+              className="cursor-pointer bg-cyan-500 text-white px-3 rounded-full ml-2"
               onClick={() => handleSave(todo.id)}
             >
               Save
             </button>
             <button
-              className="cursor-pointer bg-gray-300 text-white px-3 py-1 rounded-full ml-2"
+              className="cursor-pointer bg-gray-300 text-white px-3 rounded-full ml-2"
               onClick={() => setIsEdit(false)}
             >
               Cancel
@@ -70,12 +70,14 @@ export const TodoItem = ({
       </div>
 
       <div className="hidden group-hover:block">
-        <button
-          className="cursor-pointer mr-5"
-          onClick={() => handleEdit(todo.text)}
-        >
-          ✏️
-        </button>
+        {!todo.isDone && (
+          <button
+            className="cursor-pointer mr-5"
+            onClick={() => handleEdit(todo.text)}
+          >
+            ✏️
+          </button>
+        )}
         <button
           className="cursor-pointer"
           onClick={() => handleRemoveItem(todo.id)}
