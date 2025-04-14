@@ -1,8 +1,7 @@
 import BackButton from "@/components/back-button";
+import { MarkdownRender } from "@/components/markdown/render";
 import { createClient } from "@/lib/server";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 export async function generateMetadata({
   params,
@@ -47,10 +46,9 @@ export default async function Page({
     <div>
       <article className="max-w-3xl mx-auto py-8 px-4">
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-        <div className="prose dark:prose-invert max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {post.content}
-          </ReactMarkdown>
+        
+        <div className="prose dark:prose-invert max-w-none space-y-4 leading-7">
+          <MarkdownRender content={post.content}></MarkdownRender>
         </div>
       </article>
 

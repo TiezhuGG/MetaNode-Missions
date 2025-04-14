@@ -117,4 +117,33 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-bold;
+  }
+}
+
+@layer utilities {
+  .prose h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply mt-5;
+  }
+  .prose h1 {
+    @apply text-4xl;
+  }
+  .prose h2 {
+    @apply text-3xl;
+  }
+  .prose h3 {
+    @apply text-2xl;
+  }
+  .code-block {
+    @apply bg-gray-100 overflow-auto p-5 rounded-md my-5;
+  }
 }

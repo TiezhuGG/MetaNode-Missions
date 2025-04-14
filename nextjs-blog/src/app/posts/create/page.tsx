@@ -33,7 +33,7 @@ export default function Page() {
       user_id: user?.id,
     });
 
-    if (!error) router.push(`/posts/${data.slug}`);
+    if (!error) router.push(`/`);
   };
 
   return (

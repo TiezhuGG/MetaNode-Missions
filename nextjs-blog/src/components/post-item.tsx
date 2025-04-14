@@ -40,7 +40,7 @@ export default function PostItem({ post }: { post: PostType }) {
         <CardFooter className="flex justify-between text-gray-400 mt-4">
           <div className="flex">
             <Calendar className="size-4" />
-            <p className="text-sm ml-1">{formatDate(inserted_at)}</p>
+            <time className="text-sm ml-1">{formatDate(inserted_at)}</time>
           </div>
           <p>{author}</p>
         </CardFooter>
