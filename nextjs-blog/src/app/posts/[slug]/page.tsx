@@ -4,6 +4,28 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  const supabase = await createClient();
+
+  if (slug) {
+    const { data: post } = await supabase
+      .from("posts")
+      .select()
+      .eq("slug", slug)
+      .single();
+
+    return {
+      title: post.title,
+    };
+  }
+}
+
 export default async function Page({
   params,
 }: {
