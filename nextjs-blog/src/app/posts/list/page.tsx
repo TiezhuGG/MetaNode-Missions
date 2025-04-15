@@ -1,4 +1,5 @@
-import PostItem, { PostType } from "@/components/post-item";
+import PostItem from "@/components/post-item";
+import { PostType } from "../types";
 import Actions from "./actions";
 
 interface Props {
@@ -12,7 +13,7 @@ export default function PostList({ posts }: Props) {
         {posts?.map((post) => (
           <div className="relative group" key={post.id}>
             <PostItem key={post.id} post={post} />
-            <Actions id={post.id} />
+            <Actions id={post.id} slug={post.slug} />
           </div>
         ))}
       </ul>

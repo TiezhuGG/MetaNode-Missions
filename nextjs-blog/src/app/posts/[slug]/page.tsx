@@ -52,7 +52,7 @@ export default async function Page({
         </div>
       </article>
 
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center my-5">
         <BackButton />
       </div>
     </div>

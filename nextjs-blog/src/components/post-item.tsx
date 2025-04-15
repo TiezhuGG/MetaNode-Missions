@@ -8,16 +8,7 @@ import {
 } from "./ui/card";
 import { Calendar } from "lucide-react";
 import { formatDate } from "@/lib/utils";
-
-export interface PostType {
-  id: number;
-  title: string;
-  author: string;
-  description: string;
-  content: string;
-  slug: string;
-  inserted_at: string;
-}
+import { PostType } from "@/app/posts/types";
 
 export default function PostItem({ post }: { post: PostType }) {
   const { title, slug, author, description, inserted_at } = post;

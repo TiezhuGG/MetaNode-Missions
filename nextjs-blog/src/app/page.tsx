@@ -17,7 +17,6 @@ export default async function Home({
   const supabase = await createClient();
   const pageSize = 10;
   const currentPage = +page || 1;
-  console.log(await searchParams);
 
   const { data: posts, count } = await supabase
     .from("posts")
@@ -27,8 +26,6 @@ export default async function Home({
 
   const totalPages = calculateTotalPages(count || 0, pageSize);
 
-  console.log(posts, count, totalPages);
-  
   return (
     <>
       <MainNav />

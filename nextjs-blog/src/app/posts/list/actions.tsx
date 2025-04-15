@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function Actions({ ...props }) {
-  const { id } = props;
+  const { id, slug } = props;
   const router = useRouter();
 
   const onHandleDeletePost = async (id: number) => {
@@ -18,7 +18,7 @@ export default function Actions({ ...props }) {
     <>
       <button
         className="absolute top-2 right-12 cursor-pointer hidden group-hover:block"
-        onClick={() => router.push(`/posts/edit`)}
+        onClick={() => router.push(`/posts/${slug}/edit`)}
       >
         ✏️
       </button>
