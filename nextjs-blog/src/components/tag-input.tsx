@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tag } from "@/app/posts/types";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
-import { addTag } from "@/app/api/tags/actions";
+import { getTags, addTag } from "@/app/api/tags/actions";
 
 export function TagInput({
   selectedTags,
@@ -24,14 +24,13 @@ export function TagInput({
   const [tags, setTags] = useState<Tag[]>([]);
   const [search, setSearch] = useState("");
 
-  const getTags = async () => {
-    const res = await fetch("/api/tags");
-    const data = await res.json();
+  const handleGetTags = async () => {
+    const data = await getTags();
     setTags(data);
   };
   
   useEffect(() => {
-    getTags();
+    handleGetTags();
   }, []);
 
   const handleAddTag = async () => {
@@ -40,7 +39,7 @@ export function TagInput({
     toast(message);
     if (success) {
       setSearch("");
-      getTags();
+      handleGetTags();
     }
   };
 

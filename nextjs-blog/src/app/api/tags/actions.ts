@@ -1,3 +1,9 @@
+export async function getTags() {
+  const res = await fetch("/api/tags");
+  const data = await res.json();
+  return data;
+}
+
 export async function addTag(name: string) {
   const res = await fetch(`/api/tags`, {
     method: "POST",

@@ -1,8 +1,7 @@
 import { MainNav } from "@/components/main-nav";
-import { createClient } from "@/lib/server";
 import PostList from "./posts/list/page";
 import { PaginationComponent } from "@/components/pagination";
-import { calculateTotalPages } from "@/lib/pagination";
+import { getAllPosts, getPostsByPage } from "./posts/actions";
 
 type SearchParamsType = Promise<{
   [key: string]: string | string[] | undefined;
@@ -14,22 +13,15 @@ export default async function Home({
   searchParams?: SearchParamsType;
 }) {
   const { page } = await searchParams;
-  const supabase = await createClient();
-  const pageSize = 10;
-  const currentPage = +page || 1;
 
-  const { data: posts, count } = await supabase
-    .from("posts")
-    .select("*", { count: "exact" })
-    .order("inserted_at", { ascending: false })
-    .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
+  const { posts, currentPage, totalPages } = await getPostsByPage(page);
 
-  const totalPages = calculateTotalPages(count || 0, pageSize);
+  const allPosts = await getAllPosts();
 
   return (
     <>
       <MainNav />
-      <PostList posts={posts ?? []} />
+      <PostList posts={posts ?? []} allPosts={allPosts} />
       <div className="my-5">
         <PaginationComponent
           currentPage={currentPage}

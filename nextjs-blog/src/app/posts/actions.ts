@@ -3,6 +3,32 @@
 import { redirect } from "next/navigation";
 import { PostType } from "./types";
 import { createClient } from "@/lib/server";
+import { calculateTotalPages } from "@/lib/pagination";
+
+export async function getAllPosts() {
+  const supabase = await createClient();
+
+  const { data: allPosts } = await supabase.from("posts").select("*");
+
+  console.log("全部", allPosts);
+  return allPosts
+}
+
+export async function getPostsByPage(page: number) {
+  const supabase = await createClient();
+  const pageSize = 10;
+  const currentPage = +page || 1;
+
+  const { data: posts, count } = await supabase
+    .from("posts")
+    .select("*", { count: "exact" })
+    .order("inserted_at", { ascending: false })
+    .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
+
+  const totalPages = calculateTotalPages(count || 0, pageSize);
+
+  return { posts, currentPage, totalPages };
+}
 
 export async function createPost(postData: PostType) {
   const supabase = await createClient();
