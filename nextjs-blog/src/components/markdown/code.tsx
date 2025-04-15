@@ -10,25 +10,12 @@ export function Code({
 }: React.HTMLAttributes<HTMLElement>) {
   const language = className?.replace("language-", "") || "plaintext";
 
-  const setupHighlight = async () => {
-    if (typeof window !== "undefined") {
-      const hljs = await import("highlight.js");
-      await import("highlight.js/lib/common");
-      return hljs.default;
-    }
-  };
-
   useEffect(() => {
     const initHighlight = async () => {
-      const hljs = await setupHighlight();
-      if (hljs) {
-        // 手动触发高亮
-        document.querySelectorAll("pre code").forEach((block) => {
-          hljs.highlightElement(block);
-        });
-
-        // 添加复制按钮等扩展功能
-        // addCopyButtons();
+      if (typeof window !== "undefined") {
+        const hljs = await import("highlight.js");
+        await import("highlight.js/lib/common");
+        return hljs.default;
       }
     };
     initHighlight();

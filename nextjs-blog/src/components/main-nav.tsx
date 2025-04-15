@@ -15,7 +15,7 @@ import { ModeToggle } from "./ui/toggle";
 
 export function MainNav() {
   return (
-    <div className="max-w-[1400px] mx-auto flex justify-between items-center px-10 h-18 sticky backdrop-blur top-0 z-10 border-x-0">
+    <div className="max-w-[1400px] mx-auto flex justify-between items-center px-10 h-18">
       <Link href="/">
         <h1 className="text-3xl font-bold">博客</h1>
       </Link>
