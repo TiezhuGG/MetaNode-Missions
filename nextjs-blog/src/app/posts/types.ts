@@ -8,4 +8,11 @@ export interface PostType {
   user_email: string;
   inserted_at: string;
   user_id: string;
+  tag_id: string[];
+}
+
+export interface Tag {
+  id: string;
+  name: string;
+  created_at: string;
 }

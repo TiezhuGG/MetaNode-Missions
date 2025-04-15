@@ -37,7 +37,12 @@ export function MainNav() {
 
           {/* <NavigationMenuItem>
             <Link href="/tags" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <NavigationMenuLink
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  "hover:bg-gray-50 dark:hover:text-gray-950"
+                )}
+              >
                 标签
               </NavigationMenuLink>
             </Link>

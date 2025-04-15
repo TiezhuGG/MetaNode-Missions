@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MarkdownEditor } from "@/components/markdown/editor";
 import { PostType } from "@/app/posts/types";
 import BackButton from "./back-button";
+import { TagInput } from "./tag-input";
 
 interface formProps {
   postData?: PostType | null;
@@ -56,6 +57,14 @@ export default function PostForm({ postData, action }: formProps) {
             {...register("slug", { required: true })}
             className="outline rounded h-10 px-4 flex-1"
             placeholder="请输入slug"
+          />
+        </div>
+
+        <div className="flex items-center">
+          <label className="w-12 mr-5">标签:</label>
+          <TagInput
+            selectedTags={watch("tag_id") || []}
+            onSelect={(val) => setValue("tag_id", val)}
           />
         </div>
 

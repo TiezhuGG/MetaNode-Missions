@@ -4,37 +4,57 @@ import { redirect } from "next/navigation";
 import { PostType } from "./types";
 import { createClient } from "@/lib/server";
 
-export async function createPost(data: PostType) {
+export async function createPost(postData: PostType) {
   const supabase = await createClient();
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { error } = await supabase.from("posts").insert({
-    ...data,
-    user_id: user?.id as string,
-  });
+  const { data: post, error: postError } = await supabase
+    .from("posts")
+    .insert({
+      ...postData,
+      user_id: user?.id,
+    })
+    .select()
+    .single();
 
-  if (!error) {
+  const { error } = await supabase.from("posts_tags").insert(
+    postData.tag_id.map((tagId) => ({
+      post_id: post?.id,
+      tag_id: tagId,
+    }))
+  );
+
+  if (!error && !postError) {
     redirect(`/`);
   }
 }
 
-export async function updatePost(postId: number, data: PostType) {
+export async function updatePost(postId: number, postData: PostType) {
   const supabase = await createClient();
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { error } = await supabase
+  const { data: post, error: postError } = await supabase
     .from("posts")
-    .update(data)
+    .update(postData)
     .eq("id", postId)
-    .eq("user_id", user?.id as string);
+    .eq("user_id", user?.id)
+    .select()
+    .single();
 
-  if (!error) {
+  const { error } = await supabase.from("posts_tags").upsert(
+    postData.tag_id.map((tagId) => ({
+      post_id: post?.id,
+      tag_id: tagId,
+    }))
+  );
+
+  if (!error && !postError) {
     redirect(`/`);
   }
 }
