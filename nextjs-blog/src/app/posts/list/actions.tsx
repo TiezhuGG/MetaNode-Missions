@@ -1,17 +1,25 @@
 "use client";
 
-import { handleDeletePost } from "@/app/login/actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { handleDeletePost } from "../actions";
 
-export default function Actions({ ...props }) {
-  const { id, slug } = props;
+export default function Actions({
+  id,
+  slug,
+  onDelete,
+}: {
+  id: number;
+  slug: string;
+  onDelete: (id: number) => void;
+}) {
   const router = useRouter();
 
   const onHandleDeletePost = async (id: number) => {
     const result = await handleDeletePost(id);
-    router.refresh();
+    onDelete(id);
     toast.success(result.message);
+    router.refresh();
   };
 
   return (

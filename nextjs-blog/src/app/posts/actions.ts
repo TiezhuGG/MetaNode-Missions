@@ -10,8 +10,7 @@ export async function getAllPosts() {
 
   const { data: allPosts } = await supabase.from("posts").select("*");
 
-  console.log("全部", allPosts);
-  return allPosts
+  return allPosts;
 }
 
 export async function getPostsByPage(page: number) {
@@ -46,14 +45,18 @@ export async function createPost(postData: PostType) {
     .select()
     .single();
 
-  const { error } = await supabase.from("posts_tags").insert(
-    postData.tag_id.map((tagId) => ({
-      post_id: post?.id,
-      tag_id: tagId,
-    }))
-  );
+  if (postData?.tag_id?.length) {
+    const { error } = await supabase.from("posts_tags").insert(
+      postData.tag_id.map((tagId) => ({
+        post_id: post?.id,
+        tag_id: tagId,
+      }))
+    );
 
-  if (!error && !postError) {
+    if (!error) redirect("/");
+  }
+
+  if (!postError) {
     redirect(`/`);
   }
 }
@@ -82,5 +85,17 @@ export async function updatePost(postId: number, postData: PostType) {
 
   if (!error && !postError) {
     redirect(`/`);
+  }
+}
+
+export async function handleDeletePost(id: number) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("posts").delete().eq("id", id);
+
+  if (error) {
+    redirect("/error");
+  } else {
+    return { message: "删除成功" };
   }
 }

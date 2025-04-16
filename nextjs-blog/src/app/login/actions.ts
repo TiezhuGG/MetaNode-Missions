@@ -49,14 +49,4 @@ export async function logOut() {
   redirect("/login");
 }
 
-export async function handleDeletePost(id: number) {
-  const supabase = await createClient();
 
-  const { error } = await supabase.from("posts").delete().eq("id", id);
-
-  if (error) {
-    redirect("/error");
-  } else {
-    return { message: "删除成功" };
-  }
-}

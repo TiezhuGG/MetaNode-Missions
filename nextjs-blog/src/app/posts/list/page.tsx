@@ -7,13 +7,17 @@ import FilterByTag from "@/components/filter-by-tag";
 import { useEffect, useState } from "react";
 
 interface Props {
-  posts: PostType[] | null;
-  allPosts: PostType[] | null;
+  posts: PostType[];
+  allPosts: PostType[];
 }
 
 export default function PostList({ posts, allPosts }: Props) {
   const [currentTagId, setCurrentTagId] = useState<string>("All");
   const [filterPosts, setFilterPosts] = useState(posts);
+
+  const handlePostDeleted = (deletedId: number) => {
+    setFilterPosts((posts) => posts.filter((post) => post.id !== deletedId));
+  };
 
   useEffect(() => {
     if (currentTagId === "All") {
@@ -37,7 +41,11 @@ export default function PostList({ posts, allPosts }: Props) {
         {filterPosts?.map((post) => (
           <article className="relative group" key={post.id}>
             <PostItem key={post.id} post={post} />
-            <Actions id={post.id} slug={post.slug} />
+            <Actions
+              id={post.id}
+              slug={post.slug}
+              onDelete={handlePostDeleted}
+            />
           </article>
         ))}
       </ul>

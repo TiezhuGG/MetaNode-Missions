@@ -22,11 +22,9 @@ export function Code({
   }, [children]);
 
   return !inline ? (
-    <pre className={`rounded-lg p-4 my-5 ${className}`}>
-      <code className={className} {...props}>
-        {children}
-      </code>
-    </pre>
+    <code className={className} {...props}>
+      {children}
+    </code>
   ) : (
     <pre className="rounded-lg my-5">
       <code className={`language-${language}`} {...props}>
