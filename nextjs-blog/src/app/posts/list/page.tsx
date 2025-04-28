@@ -1,10 +1,11 @@
 "use client";
 
 import PostItem from "@/components/post-item";
-import { PostType } from "../types";
+import { PostType, Tag } from "../types";
 import Actions from "./actions";
 import FilterByTag from "@/components/filter-by-tag";
 import { useEffect, useState } from "react";
+import { getTags } from "@/app/api/tags/actions";
 
 interface Props {
   posts: PostType[];
@@ -14,10 +15,21 @@ interface Props {
 export default function PostList({ posts, allPosts }: Props) {
   const [currentTagId, setCurrentTagId] = useState<string>("All");
   const [filterPosts, setFilterPosts] = useState(posts);
+  const [tags, setTags] = useState<Tag[]>([]);
+
+  const handleGetTags = async () => {
+    const data = await getTags();
+    data?.unshift({ id: "All", name: "All" });
+    setTags(data);
+  };
 
   const handlePostDeleted = (deletedId: number) => {
     setFilterPosts((posts) => posts.filter((post) => post.id !== deletedId));
   };
+
+  useEffect(() => {
+    handleGetTags();
+  }, []);
 
   useEffect(() => {
     if (currentTagId === "All") {
@@ -35,7 +47,7 @@ export default function PostList({ posts, allPosts }: Props) {
 
   return (
     <main className="max-w-[1200px] mx-auto px-10 mt-10">
-      <FilterByTag onChange={setCurrentTagId} />
+      <FilterByTag tags={tags} onChange={setCurrentTagId} />
 
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {filterPosts?.map((post) => (

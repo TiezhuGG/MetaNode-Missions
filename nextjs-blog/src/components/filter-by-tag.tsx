@@ -1,26 +1,12 @@
-"use client";
-
-import { getTags } from "@/app/api/tags/actions";
 import { Tag } from "@/app/posts/types";
-import { useEffect, useState } from "react";
 
 export default function FilterByTag({
+  tags,
   onChange,
 }: {
+  tags: Tag[];
   onChange: (tagId: string) => void;
 }) {
-  const [tags, setTags] = useState<Tag[]>([]);
-
-  const handleGetTags = async () => {
-    const data = await getTags();
-    data?.unshift({ id: "All", name: "All" });
-    setTags(data);
-  };
-
-  useEffect(() => {
-    handleGetTags();
-  }, []);
-
   return (
     <div className="flex flex-wrap justify-center gap-2 mb-5">
       {tags.map((tag) => (

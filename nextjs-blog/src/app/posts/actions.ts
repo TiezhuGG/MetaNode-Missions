@@ -88,7 +88,7 @@ export async function updatePost(postId: number, postData: PostType) {
   }
 }
 
-export async function handleDeletePost(id: number) {
+export async function deletePost(id: number) {
   const supabase = await createClient();
 
   const { error } = await supabase.from("posts").delete().eq("id", id);

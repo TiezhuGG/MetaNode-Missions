@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { handleDeletePost } from "../actions";
+import { deletePost } from "../actions";
 
 export default function Actions({
   id,
@@ -15,8 +15,8 @@ export default function Actions({
 }) {
   const router = useRouter();
 
-  const onHandleDeletePost = async (id: number) => {
-    const result = await handleDeletePost(id);
+  const handleDeletePost = async (id: number) => {
+    const result = await deletePost(id);
     onDelete(id);
     toast.success(result.message);
     router.refresh();
@@ -32,7 +32,7 @@ export default function Actions({
       </button>
       <button
         className="absolute top-2 right-2 cursor-pointer hidden group-hover:block"
-        onClick={() => onHandleDeletePost(id)}
+        onClick={() => handleDeletePost(id)}
       >
         🗑️
       </button>
