@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
+
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -16,7 +17,7 @@ contract FFCoin is ERC20, Ownable {
     }
 
     // 给指定地址to铸造amount数量的代币
-    // onlyOwner 修饰符限制只有合约的所有者才能调用该函数
+    // onlyOwner 修饰符限制只有合约的所有者才能调用该函数  
     function mint(address to, uint256 amount) public onlyOwner {
         require(totalSupply() + amount <= MAX_SUPPLY, "Exceeds max supply");
         _mint(to, amount);
