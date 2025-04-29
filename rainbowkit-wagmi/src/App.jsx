@@ -1,5 +1,6 @@
 import { Header } from "./components/Header.tsx";
 import { Info } from "@/components/Info.tsx";
+import { NetworkSwitcher } from "./components/Switcher.tsx";
 
 function App() {
   return (
@@ -7,6 +8,9 @@ function App() {
       <Header />
       <div className="m-10 text-center">
         <Info />
+      </div>
+      <div>
+        <NetworkSwitcher />
       </div>
     </div>
   );
